@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: aliceblue;
+            border: none;
+            background-image: url(Assets/img\ 1.jpg);
+            background-size: cover;
+        }
+        .otp-container {
+            border: 2px solid;
+            border-radius: 50px;
+            margin: auto;
+            padding: 30px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0px 3px 15px rgba(113, 115, 119, 0.5);
+            background: transparent;
+            backdrop-filter: blur(5px);
+        }
+        .mail {
+            height: 30px;
+            width: 250px;
+            font-size: 15px;
+            border-radius: 10px;
+            padding-left: 10px;
+        }
+        button {
+            height: 35px;
+            width: 5rem;
+            border: none;
+            color: aliceblue;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 7px 32px rgba(43, 40, 40, 0.1);
+            background-color: rgb(53, 53, 182);
+            transform: 3s ease;
+        }
+        button:hover {
+            color: blue;
+            cursor: pointer;
+            background-color: aliceblue;
+            border: 2px solid blue;
+        }
+        .otp-inputs input {
+            width: 30px;
+            height: 40px;
+            font-size: 20px;
+            border-radius: 10px;
+            padding-left: 15px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+        .remember {
+            text-align: left;
+        }
+        @media (max-width: 450px) {
+            body {
+                background-size: cover;
+                background-position: center;
+            }
+            .otp-container {
+                margin: 10px;
+                width: 80%;
+                font-size: 15px;
+            }
+            .otp-inputs input {
+                width: 25px;
+                height: 35px;
+                border-radius: 10px;
+                
+            }
+            .mail {
+                width: 220px;
+            }
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="otp-container">
+        <div class="forgot">
+            <h2>Forgetten Password!</h2>
+            <p>Enter your recovery mail to get the verification code.</p>
+            
+        </div>
+        <div>
+            
+            <form id="otpForm">
+                <input type="email" id="emailInput" class="mail" name="email" placeholder="Enter your email"><br>
+                <span id="emailError" class="error">Please enter a valid Email.</span><br>
+                <button type="button" id="sendOtpButton">Send OTP</button><br>
+                <span id="otpSentMessage" class="error">OTP has been sent!</span>
+                <br><br>
+                <h2>Enter OTP!</h2>
+                <div class="otp-inputs">
+                    <input type="text" maxlength="1" id="otp1" name="otp1" required>
+                    <input type="text" maxlength="1" id="otp2" name="otp2" required>
+                    <input type="text" maxlength="1" id="otp3" name="otp3" required>
+                    <input type="text" maxlength="1" id="otp4" name="otp4" required>
+                </div>
+                <button type="submit" class="otp-submit">Verify OTP</button>
+            </form>
+            <p><strong>Note:</strong> Make sure you match the OTP with the OTP displayed in pop-up.</p>
+            <p class="remember"><a href="index.html">Remembered</a></p>
+        </div>
+    </div>
+
+    <script>
+        function generateRandomOTP() {
+            return Math.floor(1000 + Math.random() * 9000);
+        }
+
+        const otpForm = document.getElementById('otpForm');
+        const emailInput = document.getElementById('emailInput');
+        const emailError = document.getElementById('emailError');
+        const sendOtpButton = document.getElementById('sendOtpButton');
+        const otpSentMessage = document.getElementById('otpSentMessage');
+
+        otpSentMessage.style.display = 'none';
+
+        let generateOTP;
+        sendOtpButton.addEventListener('click', () => {
+            const emailValue = emailInput.value;
+            if (!validateEmail(emailValue)) {
+                emailError.style.display = 'block';
+            } else {
+                emailError.style.display = 'none';
+
+                generateOTP = generateRandomOTP();
+                alert("Your OTP is: "+ generateOTP);
+                generateOTP = generateOTP.toString();
+
+                otpSentMessage.style.display = 'block';
+            }
+        })
+        
+
+        const inputs = document.querySelectorAll('.otp-inputs input');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                if (e.target.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        
+
+        otpForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let enteredOTP = '';
+            inputs.forEach(input => {
+                enteredOTP += input.value;
+            });
+
+            if(enteredOTP === generateOTP) {
+                alert("OTP matched! Entering into your Account ");
+                window.location.href = 'login.html';
+            } else {
+                alert("Incorrect OTP, Please try again.")
+            }
+        });
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+    </script>
+</body>
+</html>
