@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up Page</title>
+    <link rel="stylesheet" href="accstyle.css"
+</head>
+<body>
+    <div class="create">
+        <div><h1 class="Cre-acc">Create Your Account</h1></div>
+        <div class="mail">
+            <label for="mail">Mail</label>
+            <input type="text" name="mail">
+        </div>
+        <div class="mail">
+            <label for="mail">Username</label>
+            <input type="text" name="mail">
+        </div>
+        <div class="password">
+            <label for="password">Password(atleast 8 characters)</label>
+            <input type="password" name="password">
+        </div>
+        <div class="password">
+            <label for="password">Confirm Password</label>
+            <input type="password" name="password">
+        </div>
+        <div class="rem-me">
+            <input type="checkbox" id="checkbox2">
+            <label for="checkbox2"><a href="terms.html">*agree to terms and conditions</a></label>
+        </div>
+        <div class="login-btn">
+            <button id="Button">Create Account</button>
+        </div>
+        <p class="para">Already have an account,<a href="index.html">Sign-in</a></p>
+    </div>
+    <script>
+        document.getElementById("Button").onclick = function() {
+            window.location.href = "create.html" ;
+        };
+    </script>
+</body>
+</html>
